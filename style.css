@@ -14,10 +14,16 @@ body {
     grid-gap: 20px;
 }
 
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
 @media screen and (max-width: 768px){
     .poke-cards {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         grid-gap: 20px;
     }
+
 }
