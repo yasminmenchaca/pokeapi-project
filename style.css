@@ -2,6 +2,22 @@ body {
     background-color: red;
 }
 
-.hide {
-    display: none;
+.container {
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+
+
+.poke-cards {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 20px;
+}
+
+@media screen and (max-width: 768px){
+    .poke-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-gap: 20px;
+    }
 }
