@@ -7,18 +7,15 @@ body {
     padding-bottom: 20px;
 }
 
-#pokedex {
+#pokeInfo {
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 20px;
 }
 
-.card:hover {
-    animation: bounce 0.5s linear;
-}
-
-.card-image {
-    height: 180px;
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
 @media screen and (max-width: 768px) {
