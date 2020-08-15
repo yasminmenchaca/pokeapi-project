@@ -18,7 +18,7 @@ const displayPokemon = (pokemon) => {
     const pokemonHTML = pokemon
         .map(
             (singlePokemon) => `
-                 <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})">
+                 <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal">
                  <div class="card-header">
                  #${singlePokemon.id} - ${singlePokemon.name}
                  </div>
@@ -42,10 +42,32 @@ const displayModal = (singlePokemon) => {
     const image = singlePokemon.sprites['front_default'];
     const name = capitalize(singlePokemon.name);
 
-    const htmlString = `
-        
-    `;
-    pokeInfo.innerHTML = htmlString + pokeInfo.innerHTML;
+    const modalBody = $('.modal-body');
+    const modalName = $('.modal-title').text(name);
+    const modalHeight = $('<p class="pokemon-height"></p>').text(
+        `Height: ${singlePokemon.height}`
+    );
+    const modalWeight = $('<p class="pokemon-weight"></p>').text(
+        `Weight: ${singlePokemon.weight}`
+    );
+    const modalType = $('<p class="pokemon-type"></p>').text(
+        `Weight: ${type}`
+    );
+
+    const modalImg = $('<img class="pokemon-img">');
+    modalImg.attr('src', image);
+
+    // content removed once closed
+    if (modalBody.children().length) {
+        modalBody.children().remove();
+    }
+
+    modalBody
+        .append(modalName)
+        .append(modalImg)
+        .append(modalHeight)
+        .append(modalWeight)
+        .append(modalType);
 };
 
-fetchPokemonInfo();
+fetchPokemonInfo().catch(error => console.log(error));
