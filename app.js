@@ -1,58 +1,51 @@
-$(document).ready(function () {
+const pokeInfo = document.getElementById('pokeInfo');
+const capitalize = (str) => str[0].toUpperCase() + str.substr(1);
 
-    const capitalize = (str) => str[0].toUpperCase() + str.substr(1);
+const fetchPokemonInfo = async () => {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=150`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const pokemon = data.results.map((result, index) => ({
+        name: capitalize(result.name),
+        apiURL: result.url,
+        id: index + 1,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+    }));
+    displayPokemon(pokemon);
+};
 
-    for (let i = 1; i <= 150; i++) {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
-            .then(res => res.json())
-            .then(data => {
-
-                const pokeName = capitalize(data['name']);
-                const pokeId = data['id'].toString().padStart(3, '0');
-                const pokeImg = data['sprites']['front_default'];
-                const pokeWeight = data['weight'];
-                const pokeHeight = data['height'];
-                const pokeType = data.types.map((type) => type.type.name).join(', ');
-
-//////////////////////////////// CARDS ////////////////////////////////
-                $('.poke-cards').append(`
-                 <a href="#" data-toggle="modal" data-target="#exampleModalCenter">
-                 <div class="card text-center">
+const displayPokemon = (pokemon) => {
+    const pokemonHTML = pokemon
+        .map(
+            (singlePokemon) => `
+                 <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})">
                  <div class="card-header">
-                 #${pokeId} - ${pokeName}
+                 #${singlePokemon.id} - ${singlePokemon.name}
                  </div>
-                 <img class="card-img-top" src="${pokeImg}">
-                 <div class="card-body">
-                 <p class="card-text">Type(s): ${pokeType}</p>
-                 <p class="card-text">Height: ${pokeHeight}<br>Weight: ${pokeWeight}</p>
+                 <img class="card-img-top" src="${singlePokemon.image}">
                  </div>
-                 </div>
-                 </a>`);
+    `
+        )
+        .join('');
+    pokeInfo.innerHTML = pokemonHTML;
+};
 
-            })
-            .catch(err => console.log(err));
-    }
+const selectPokemon = async (id) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    const res = await fetch(url);
+    const singlePokemon = await res.json();
+    displayModal(singlePokemon);
+};
 
-    //////////////////////////////// MODALS ////////////////////////////////
-    $('.modal-popup').append(`
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Pokemon Name</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
+const displayModal = (singlePokemon) => {
+    const type = singlePokemon.types.map((type) => type.type.name).join(', ');
+    const image = singlePokemon.sprites['front_default'];
+    const name = capitalize(singlePokemon.name);
 
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-                </div>
-                </div>`)
+    const htmlString = `
+        
+    `;
+    pokeInfo.innerHTML = htmlString + pokeInfo.innerHTML;
+};
 
-});
+fetchPokemonInfo();
