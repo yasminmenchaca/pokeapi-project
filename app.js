@@ -8,7 +8,7 @@ const fetchPokemonInfo = async () => {
     const pokemon = data.results.map((result, index) => ({
         name: capitalize(result.name),
         apiURL: result.url,
-        id: index + 1,
+        id: (index + 1).toString().padStart(3, '0'),
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
     }));
     displayPokemon(pokemon);
@@ -22,7 +22,7 @@ const displayPokemon = (pokemon) => {
                  <div class="card-header">
                  #${singlePokemon.id} - ${singlePokemon.name}
                  </div>
-                 <img class="card-img-top" src="${singlePokemon.image}">
+                 <img class="card-img" src="${singlePokemon.image}">
                  </div>
     `
         )
@@ -44,18 +44,14 @@ const displayModal = (singlePokemon) => {
 
     const modalBody = $('.modal-body');
     const modalName = $('.modal-title').text(name);
-    const modalHeight = $('<p class="pokemon-height"></p>').text(
-        `Height: ${singlePokemon.height}`
-    );
-    const modalWeight = $('<p class="pokemon-weight"></p>').text(
-        `Weight: ${singlePokemon.weight}`
+    const modalStats = $('<p class="pokemon-stats"></p>').text(
+        `Weight: ${singlePokemon.weight} | Height: ${singlePokemon.height}`
     );
     const modalType = $('<p class="pokemon-type"></p>').text(
-        `Weight: ${type}`
+        `Type: ${type}`
     );
-
-    const modalImg = $('<img class="pokemon-img">');
-    modalImg.attr('src', image);
+    const modalFront = $('<img class="pokemon-img">');
+    modalFront.attr('src', image);
 
     // content removed once closed
     if (modalBody.children().length) {
@@ -64,9 +60,8 @@ const displayModal = (singlePokemon) => {
 
     modalBody
         .append(modalName)
-        .append(modalImg)
-        .append(modalHeight)
-        .append(modalWeight)
+        .append(modalFront)
+        .append(modalStats)
         .append(modalType);
 };
 
