@@ -1,4 +1,5 @@
 const pokeInfo = document.getElementById('pokeInfo');
+
 const capitalize = (str) => str[0].toUpperCase() + str.substr(1);
 
 const fetchPokemonInfo = async () => {
@@ -18,7 +19,8 @@ const displayPokemon = (pokemon) => {
 
     const pokemonHTML = pokemon
         .map(
-            (singlePokemon) => `
+            (singlePokemon) =>
+                `
                  <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal">
                  <div class="card-header">
                  #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
@@ -39,15 +41,15 @@ const selectPokemon = async (id) => {
 };
 
 const displayModal = (singlePokemon) => {
-
-    const type = singlePokemon.types.map((type) => type.type.name).join(', ');
+    const type = singlePokemon.types.map((type) => type.type.name).join(' | ');
     const image = singlePokemon.sprites['front_default'];
     const name = capitalize(singlePokemon.name);
-
+    
     const modalBody = $('.modal-body');
-    const modalName = $('.modal-title').text(name);
+    const modalName = $('.pokeName').text(name);
+
     const modalStats = $('<p class="pokemon-stats"></p>').text(
-        `Weight: ${singlePokemon.weight} | Height: ${singlePokemon.height}`
+        `Weight: ${singlePokemon.weight/10}kg | Height: ${singlePokemon.height/10}m`
     );
 
     const modalType = $('<p class="pokemon-type"></p>').text(
@@ -80,3 +82,4 @@ $(document).ready(function(){
 });
 
 fetchPokemonInfo().catch(error => console.log(error));
+

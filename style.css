@@ -1,5 +1,6 @@
 body {
     background-color: red;
+    font-family: 'Alata', sans-serif;
 }
 
 .container {
@@ -23,6 +24,10 @@ body {
     height: 300px;
 }
 
+.modal__footer{
+    padding-bottom: 20px;
+}
+
 @media screen and (max-width: 768px) {
     #pokeInfo {
         display: grid;
@@ -30,7 +35,7 @@ body {
         grid-gap: 20px;
     }
 
-    .card-header{
+    .card-header {
         padding: .75rem 0.25rem;
     }
 
