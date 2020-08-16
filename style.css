@@ -21,7 +21,7 @@ body {
 }
 
 .pokemon-img {
-    height: 300px;
+    height: 25vh;
 }
 
 .pokemon-type, .pokemon-ability, .pokeName, .card-header{
@@ -46,6 +46,10 @@ body {
     .card-header {
         padding: .75rem 0.25rem;
         font-size: 16px;
+    }
+
+    .pokemon-img {
+        height: 20vh;
     }
 
 }

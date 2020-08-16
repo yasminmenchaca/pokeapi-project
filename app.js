@@ -39,10 +39,11 @@ const selectPokemon = async (id) => {
 };
 
 const displayModal = (singlePokemon) => {
-    const type = singlePokemon.types.map((type) => type.type.name).join(' | ');
-    const ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(' | ');
+    const type = singlePokemon.types.map((type) => type.type.name).join(', ');
+    const ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(', ');
 
     const image = singlePokemon.sprites['front_default'];
+    const imageBack = singlePokemon.sprites['back_default'];
     const name = singlePokemon.name;
     
     const modalBody = $('.modal-body');
@@ -63,6 +64,9 @@ const displayModal = (singlePokemon) => {
     const modalFront = $('<img class="pokemon-img">');
     modalFront.attr('src', image);
 
+    const modalBack = $('<img class="pokemon-img">');
+    modalBack.attr('src', imageBack);
+
     // content removed once closed
     if (modalBody.children().length) {
         modalBody.children().remove();
@@ -71,6 +75,7 @@ const displayModal = (singlePokemon) => {
     modalBody
         .append(modalName)
         .append(modalFront)
+        .append(modalBack)
         .append(modalStats)
         .append(modalType)
         .append(modalAbility);
