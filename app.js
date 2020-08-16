@@ -72,13 +72,11 @@ const displayModal = (singlePokemon) => {
 $(document).ready(function(){
     $('.search').on("keyup", function() {
         const value = $(this).val().toLowerCase();
-        console.log(value);
-
         $(".card").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
+    $('.reset').trigger("reset");
 });
-
 
 fetchPokemonInfo().catch(error => console.log(error));
