@@ -15,12 +15,13 @@ const fetchPokemonInfo = async () => {
 };
 
 const displayPokemon = (pokemon) => {
+
     const pokemonHTML = pokemon
         .map(
             (singlePokemon) => `
                  <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal">
                  <div class="card-header">
-                 #${singlePokemon.id} - ${singlePokemon.name}
+                 #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
                  </div>
                  <img class="card-img" src="${singlePokemon.image}">
                  </div>
@@ -43,15 +44,16 @@ const displayModal = (singlePokemon) => {
     const image = singlePokemon.sprites['front_default'];
     const name = capitalize(singlePokemon.name);
 
-
     const modalBody = $('.modal-body');
     const modalName = $('.modal-title').text(name);
     const modalStats = $('<p class="pokemon-stats"></p>').text(
         `Weight: ${singlePokemon.weight} | Height: ${singlePokemon.height}`
     );
+
     const modalType = $('<p class="pokemon-type"></p>').text(
         `Type: ${type}`
     );
+
     const modalFront = $('<img class="pokemon-img">');
     modalFront.attr('src', image);
 
@@ -66,5 +68,13 @@ const displayModal = (singlePokemon) => {
         .append(modalStats)
         .append(modalType);
 };
+
+$(".search").on('keyup', function() {
+    const input = $(this).val();
+    console.log(input);
+
+});
+
+
 
 fetchPokemonInfo().catch(error => console.log(error));
