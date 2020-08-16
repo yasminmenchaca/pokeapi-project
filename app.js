@@ -41,16 +41,16 @@ const selectPokemon = async (id) => {
 const displayModal = (singlePokemon) => {
     const type = singlePokemon.types.map((type) => type.type.name).join(', ');
     const ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(', ');
-
+    // const typeOne = singlePokemon.types.map((type) => type.type.name)[0];
     const image = singlePokemon.sprites['front_default'];
     const imageBack = singlePokemon.sprites['back_default'];
     const name = singlePokemon.name;
-    
+
     const modalBody = $('.modal-body');
     const modalName = $('.pokeName').text(name);
 
     const modalStats = $('<h5 class="pokemon-stats"></h5>').text(
-        `Weight: ${singlePokemon.weight/10}kg | Height: ${singlePokemon.height/10}m`
+        `Weight: ${singlePokemon.weight / 10}kg | Height: ${singlePokemon.height / 10}m`
     );
 
     const modalType = $('<h5 class="pokemon-type"></h5>').text(
@@ -76,22 +76,22 @@ const displayModal = (singlePokemon) => {
         .append(modalName)
         .append(modalFront)
         .append(modalBack)
-        .append(modalStats)
         .append(modalType)
+        .append(modalStats)
         .append(modalAbility);
 };
 
-$(document).ready(function(){
-    $('.search').on("keyup", function() {
+$(document).ready(function () {
+    $('.search').on("keyup", function () {
         const value = $(this).val().toLowerCase();
-        $(".card").filter(function() {
+        $(".card").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
     $('.reset').trigger("reset");
 
     // Close Navbar when clicked outside
-    $(window).on('click', function(event){
+    $(window).on('click', function (event) {
         // element over which click was made
         var clickOver = $(event.target)
         if ($('.navbar .navbar-toggler').attr('aria-expanded') == 'true' && clickOver.closest('.navbar').length === 0) {
