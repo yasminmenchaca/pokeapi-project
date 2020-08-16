@@ -24,6 +24,10 @@ body {
     height: 300px;
 }
 
+.pokemon-type, .pokemon-ability, .pokeName, .card-header{
+    text-transform: capitalize;
+}
+
 .modal__footer{
     padding-bottom: 20px;
 }
