@@ -8,7 +8,7 @@ const fetchPokemonInfo = async () => {
     const pokemon = data.results.map((result, index) => ({
         name: capitalize(result.name),
         apiURL: result.url,
-        id: (index + 1).toString().padStart(3, '0'),
+        id: index + 1,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
     }));
     displayPokemon(pokemon);
@@ -38,9 +38,11 @@ const selectPokemon = async (id) => {
 };
 
 const displayModal = (singlePokemon) => {
+
     const type = singlePokemon.types.map((type) => type.type.name).join(', ');
     const image = singlePokemon.sprites['front_default'];
     const name = capitalize(singlePokemon.name);
+
 
     const modalBody = $('.modal-body');
     const modalName = $('.modal-title').text(name);
