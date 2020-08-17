@@ -3,7 +3,7 @@ body {
     font-family: 'Alata', sans-serif;
 }
 
-.container {
+.container__main {
     padding-top: 100px;
     padding-bottom: 20px;
 }
@@ -34,6 +34,10 @@ body {
 
 .card-header{
     font-size: 19px;
+}
+
+.jumbotron__ {
+    background-color: #DD3444;
 }
 
 @media screen and (max-width: 768px) {
