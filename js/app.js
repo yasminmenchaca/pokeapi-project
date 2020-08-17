@@ -21,7 +21,7 @@ const displayPokemon = (pokemon) => {
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
-            <div class="card-footer">Add to Favorites <span class="star glyphicon glyphicon-star-empty"></span></div>
+            <div class ="card-footer"><button class="btn btn-primary" data-id=${singlePokemon.id}>Add to Favorites</button></div>
             </div>
     `
     ).join('');
@@ -117,6 +117,7 @@ const displayModal = (singlePokemon) => {
 };
 
 $(document).ready(function () {
+    // search on keyup function
     $('.search').on("keyup", function () {
         const value = $(this).val().toLowerCase();
         $(".card").filter(function () {
@@ -135,8 +136,9 @@ $(document).ready(function () {
         }
     });
 
-    $(".search").keydown(function(e) {
-        if(e.keyCode === 13) {
+    // pressing enter doesn't execute search
+    $(".search").keydown(function (e) {
+        if (e.keyCode === 13) {
             e.preventDefault();
             return false;
         }
