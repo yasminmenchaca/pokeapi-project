@@ -13,6 +13,7 @@ const fetchPokemonInfo = async () => {
     displayPokemon(pokemon);
 };
 
+/////////////////////////////////// INDIVIDUAL CARDS ON GRID ///////////////////////////////////
 const displayPokemon = (pokemon) => {
     pokeInfo.innerHTML = pokemon.map((singlePokemon) =>
         `
@@ -21,12 +22,34 @@ const displayPokemon = (pokemon) => {
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
-            <div class ="card-footer"><button class="btn btn-primary" data-id=${singlePokemon.id}>Add to Favorites</button></div>
+            <!-- <div class ="card-footer"><button class="btn btn-primary" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div> -->
             </div>
     `
     ).join('');
+
 };
 
+/////////////////////////////////// FAVORITES ///////////////////////////////////
+const selectFavorite = async (id) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    const res = await fetch(url);
+    const singlePokemon = await res.json();
+    displayFavorite(singlePokemon);
+};
+
+const displayFavorite = (singlePokemon) => {
+    const oldItems = JSON.parse(localStorage.getItem('favorites')) || [];
+    const newItem =
+        {
+            'id': singlePokemon.id,
+            'name': singlePokemon.name,
+            'image': singlePokemon.sprites['front_default'],
+        };
+    oldItems.push(newItem);
+    localStorage.setItem('favorites', JSON.stringify(oldItems));
+}
+
+/////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
 const selectPokemon = async (id) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
@@ -116,6 +139,8 @@ const displayModal = (singlePokemon) => {
         .append(modalTable);
 };
 
+
+/////////////////////////////////// SEARCH ///////////////////////////////////
 $(document).ready(function () {
     // search on keyup function
     $('.search').on("keyup", function () {
@@ -125,6 +150,8 @@ $(document).ready(function () {
         });
     });
     $('.reset').trigger("reset");
+
+    /////////////////////////////////// NAVBAR CLOSE ///////////////////////////////////
 
     // Close Navbar when clicked outside
     $(window).on('click', function (event) {
@@ -136,6 +163,7 @@ $(document).ready(function () {
         }
     });
 
+/////////////////////////////////// NO 'ENTER' ON SEARCH ///////////////////////////////////
     // pressing enter doesn't execute search
     $(".search").keydown(function (e) {
         if (e.keyCode === 13) {
@@ -147,4 +175,3 @@ $(document).ready(function () {
 });
 
 fetchPokemonInfo().catch(error => console.log(error));
-
