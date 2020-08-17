@@ -18,9 +18,10 @@ const displayPokemon = (pokemon) => {
         `
             <div class="card text-center">
             <div class="card-header">
-            #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
+            ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
+            <div class="card-footer">Add to Favorites <span class="star glyphicon glyphicon-star-empty"></span></div>
             </div>
     `
     ).join('');
@@ -131,6 +132,13 @@ $(document).ready(function () {
         if ($('.navbar .navbar-toggler').attr('aria-expanded') === 'true' && clickOver.closest('.navbar').length === 0) {
             // Click on navbar toggler button
             $('button[aria-expanded="true"]').click();
+        }
+    });
+
+    $(".search").keydown(function(e) {
+        if(e.keyCode === 13) {
+            e.preventDefault();
+            return false;
         }
     });
 
