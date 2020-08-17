@@ -19,12 +19,12 @@ const displayPokemon = (pokemon) => {
         .map(
             (singlePokemon) =>
                 `
-                 <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal">
-                 <div class="card-header">
-                 #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
-                 </div>
-                 <img class="card-img" src="${singlePokemon.image}">
-                 </div>
+            <div class="card text-center">
+            <div class="card-header">
+            #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
+            </div>
+            <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
+            </div>
     `
         )
         .join('');
@@ -93,8 +93,8 @@ $(document).ready(function () {
     // Close Navbar when clicked outside
     $(window).on('click', function (event) {
         // element over which click was made
-        var clickOver = $(event.target)
-        if ($('.navbar .navbar-toggler').attr('aria-expanded') == 'true' && clickOver.closest('.navbar').length === 0) {
+        const clickOver = $(event.target);
+        if ($('.navbar .navbar-toggler').attr('aria-expanded') === 'true' && clickOver.closest('.navbar').length === 0) {
             // Click on navbar toggler button
             $('button[aria-expanded="true"]').click();
         }
