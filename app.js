@@ -14,11 +14,8 @@ const fetchPokemonInfo = async () => {
 };
 
 const displayPokemon = (pokemon) => {
-
-    const pokemonHTML = pokemon
-        .map(
-            (singlePokemon) =>
-                `
+    pokeInfo.innerHTML = pokemon.map((singlePokemon) =>
+        `
             <div class="card text-center">
             <div class="card-header">
             #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
@@ -26,9 +23,7 @@ const displayPokemon = (pokemon) => {
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
             </div>
     `
-        )
-        .join('');
-    pokeInfo.innerHTML = pokemonHTML;
+    ).join('');
 };
 
 const selectPokemon = async (id) => {
@@ -41,14 +36,18 @@ const selectPokemon = async (id) => {
 const displayModal = (singlePokemon) => {
     const type = singlePokemon.types.map((type) => type.type.name).join(', ');
     const ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(', ');
-    // const typeOne = singlePokemon.types.map((type) => type.type.name)[0];
-    const image = singlePokemon.sprites['front_default'];
+    const imageFront = singlePokemon.sprites['front_default'];
     const imageBack = singlePokemon.sprites['back_default'];
     const name = singlePokemon.name;
+    const speed = singlePokemon.stats[0].base_stat;
+    const specialDefense = singlePokemon.stats[1].base_stat;
+    const specialAttack = singlePokemon.stats[2].base_stat;
+    const defense = singlePokemon.stats[3].base_stat;
+    const attack = singlePokemon.stats[4].base_stat;
+    const hp = singlePokemon.stats[5].base_stat;
 
     const modalBody = $('.modal-body');
     const modalName = $('.pokeName').text(name);
-
     const modalStats = $('<h5 class="pokemon-stats"></h5>').text(
         `Weight: ${singlePokemon.weight / 10}kg | Height: ${singlePokemon.height / 10}m`
     );
@@ -61,10 +60,44 @@ const displayModal = (singlePokemon) => {
         `Abilities: ${ability}`
     );
 
-    const modalFront = $('<img class="pokemon-img">');
-    modalFront.attr('src', image);
+    const modalTable = $('<table class="table table-striped table-sm text-left table-bordered"></table>').html(`
+<thead>
+<tr>
+<th scope="col">Base</th>
+<th scope="col">Stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">HP</th>
+<td>${hp}</td>
+</tr>
+<tr>
+<th scope="row">Attack</th>
+<td>${attack}</td>
+</tr>
+<tr>
+<th scope="row">Defense</th>
+<td>${defense}</td>
+</tr>
+<tr>
+<th scope="row">Special Attack</th>
+<td>${specialAttack}</td>
+</tr>
+<tr>
+<th scope="row">Special Defense</th>
+<td>${specialDefense}</td>
+</tr>
+<tr>
+<th scope="row">Speed</th>
+<td>${speed}</td>
+</tr>
+  </tbody>`)
 
-    const modalBack = $('<img class="pokemon-img">');
+    const modalFront = $('<img class="pokemon-img" alt="poke_front">');
+    modalFront.attr('src', imageFront);
+
+    const modalBack = $('<img class="pokemon-img" alt="poke_back">');
     modalBack.attr('src', imageBack);
 
     // content removed once closed
@@ -78,7 +111,8 @@ const displayModal = (singlePokemon) => {
         .append(modalBack)
         .append(modalType)
         .append(modalStats)
-        .append(modalAbility);
+        .append(modalAbility)
+        .append(modalTable);
 };
 
 $(document).ready(function () {
