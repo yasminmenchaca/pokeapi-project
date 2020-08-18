@@ -22,7 +22,9 @@ const displayPokemon = (pokemon) => {
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
-            <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div>
+            
+           <!-- <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div> -->
+            
             </div>
     `
     ).join('');
@@ -48,9 +50,19 @@ const savingFavorites = (singlePokemon) => {
     oldItems.push(newItem);
     localStorage.setItem('favorites', JSON.stringify(oldItems));
 
-    document.getElementById('faveId').innerHTML = newItem.id;
-    document.getElementById('faveName').innerHTML = newItem.name;
-    document.getElementById('faveImage').innerHTML = newItem.image;
+    const favorites = document.getElementById("favorites");
+    for (var i = 0; i < oldItems.length; i++) {
+        favorites.innerHTML +=
+        `  <tr>
+                <th scope="row"></th>
+                <td>${oldItems[i].id}</td>
+                <td>${oldItems[i].name}</td>
+            </tr>`;
+    }
+
+    // document.getElementById('faveId').innerHTML = newItem.id;
+    // document.getElementById('faveName').innerHTML = newItem.name;
+    // document.getElementById('faveImage').innerHTML = newItem.image;
 
     // console.log(JSON.parse(localStorage.getItem("favorites")));
 }
