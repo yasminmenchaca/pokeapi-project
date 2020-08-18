@@ -22,7 +22,7 @@ const displayPokemon = (pokemon) => {
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
-            <!-- <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div> -->
+            <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div>
             </div>
     `
     ).join('');
@@ -34,19 +34,25 @@ const selectFavorite = async (id) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
     const singlePokemon = await res.json();
-    displayFavorite(singlePokemon);
+    savingFavorites(singlePokemon);
 };
 
-const displayFavorite = (singlePokemon) => {
+const savingFavorites = (singlePokemon) => {
     const oldItems = JSON.parse(localStorage.getItem('favorites')) || [];
     const newItem =
         {
-            // 'id': singlePokemon.id,
-            'name': singlePokemon.name,
+            'id': singlePokemon.id,
             'image': singlePokemon.sprites['front_default'],
+            'name': singlePokemon.name
         };
-        oldItems.push(newItem);
-        localStorage.setItem('favorites', JSON.stringify(oldItems));
+    oldItems.push(newItem);
+    localStorage.setItem('favorites', JSON.stringify(oldItems));
+
+    document.getElementById('faveId').innerHTML = newItem.id;
+    document.getElementById('faveName').innerHTML = newItem.name;
+    document.getElementById('faveImage').innerHTML = newItem.image;
+
+    // console.log(JSON.parse(localStorage.getItem("favorites")));
 }
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
@@ -139,7 +145,6 @@ const displayModal = (singlePokemon) => {
         .append(modalTable);
 };
 
-
 /////////////////////////////////// SEARCH ///////////////////////////////////
 $(document).ready(function () {
     // search on keyup function
@@ -149,10 +154,10 @@ $(document).ready(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
+
     $('.reset').trigger("reset");
 
     /////////////////////////////////// NAVBAR CLOSE ///////////////////////////////////
-
     // Close Navbar when clicked outside
     $(window).on('click', function (event) {
         // element over which click was made
@@ -173,7 +178,7 @@ $(document).ready(function () {
     });
 
 /////////////////////////////////// BACK TO TOP BUTTON ///////////////////////////////////
-    $(window).scroll(function(){
+    $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
             $('#backToTop').fadeIn();
         } else {
@@ -181,11 +186,11 @@ $(document).ready(function () {
         }
     });
 //Click event scroll to top button jquery
-    $('#backToTop').click(function(){
-        $('html, body').animate({scrollTop : 0},600);
+    $('#backToTop').click(function () {
+        $('html, body').animate({scrollTop: 0}, 600);
         return false;
     });
-    
+
 });
 
 fetchPokemonInfo().catch(error => console.log(error));
