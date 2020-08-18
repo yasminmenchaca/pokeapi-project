@@ -1,6 +1,7 @@
 body {
     background-color: #DD3444;
-    font-family: 'Alata', sans-serif;
+    /*font-family: 'Alata', sans-serif;*/
+    font-family: 'Russo One', sans-serif;
 }
 
 .container__main {
@@ -24,21 +25,25 @@ body {
     height: 23vh;
 }
 
-.pokemon-type, .pokemon-ability, .pokeName, .card-header{
+.pokemon-type, .pokemon-ability, .pokeName, .card-header {
     text-transform: capitalize;
 }
 
-.modal__footer{
+.modal__footer {
     padding-bottom: 20px;
 }
 
-.card-header{
+.card-header {
     font-size: 19px;
 }
 
 .jumbotron__ {
-    background-color: #DD3444;
+    background-color: skyblue;
 }
+
+/*.navbar-text{*/
+/*    font-family: 'Russo One', sans-serif;*/
+/*}*/
 
 @media screen and (max-width: 768px) {
     #pokeInfo {
@@ -50,6 +55,10 @@ body {
     .card-header {
         padding: .75rem 0.25rem;
         font-size: 16px;
+    }
+
+    .pokemon-img {
+        height: 20vh;
     }
 
     .pokemon-img {

@@ -22,7 +22,7 @@ const displayPokemon = (pokemon) => {
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
-            <!-- <div class ="card-footer"><button class="btn btn-primary" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div> -->
+            <!-- <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div> -->
             </div>
     `
     ).join('');
@@ -41,12 +41,12 @@ const displayFavorite = (singlePokemon) => {
     const oldItems = JSON.parse(localStorage.getItem('favorites')) || [];
     const newItem =
         {
-            'id': singlePokemon.id,
+            // 'id': singlePokemon.id,
             'name': singlePokemon.name,
             'image': singlePokemon.sprites['front_default'],
         };
-    oldItems.push(newItem);
-    localStorage.setItem('favorites', JSON.stringify(oldItems));
+        oldItems.push(newItem);
+        localStorage.setItem('favorites', JSON.stringify(oldItems));
 }
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
