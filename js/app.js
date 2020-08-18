@@ -40,31 +40,36 @@ const selectFavorite = async (id) => {
 };
 
 const savingFavorites = (singlePokemon) => {
-    const oldItems = JSON.parse(localStorage.getItem('favorites')) || [];
-    const newItem =
-        {
-            'id': singlePokemon.id,
-            'image': singlePokemon.sprites['front_default'],
-            'name': singlePokemon.name
-        };
+    const oldItems = JSON.parse(localStorage.getItem('favorites')) || [],
+        newItem =
+            {
+                'id': singlePokemon.id,
+                'image': singlePokemon.sprites['front_default'],
+                'name': singlePokemon.name
+            };
     oldItems.push(newItem);
     localStorage.setItem('favorites', JSON.stringify(oldItems));
 
-    const favorites = document.getElementById("favorites");
-    for (var i = 0; i < oldItems.length; i++) {
-        favorites.innerHTML +=
-        `  <tr>
-                <th scope="row"></th>
-                <td>${oldItems[i].id}</td>
-                <td>${oldItems[i].name}</td>
-            </tr>`;
-    }
+    // const favorites = document.getElementById("favorites");
+    // for (let i = 0; i < oldItems.length; i++) {
+    //     document.getElementById('faveId').innerHTML = newItem.id;
+    //     document.getElementById('faveName').innerHTML = newItem.name;
+    //     favorites.innerHTML +=
+    //         `  <tr>
+    //             <th scope="row"></th>
+    //             <td>${oldItems[i].id}</td>
+    //             <td>${oldItems[i].name}</td>
+    //         </tr>`;
+    // }
 
-    // document.getElementById('faveId').innerHTML = newItem.id;
-    // document.getElementById('faveName').innerHTML = newItem.name;
-    // document.getElementById('faveImage').innerHTML = newItem.image;
+    $.each(oldItems, function () {
+        $('tbody').append(`<tr>
+        <td>${newItem.id}</td>
+        <td>${newItem.name}</td>
+        <td><img src="${newItem.image}" alt="..."></td>
+        </tr>`);
+    });
 
-    // console.log(JSON.parse(localStorage.getItem("favorites")));
 }
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
@@ -76,33 +81,33 @@ const selectPokemon = async (id) => {
 };
 
 const displayModal = (singlePokemon) => {
-    const type = singlePokemon.types.map((type) => type.type.name).join(', ');
-    const ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(', ');
-    const imageFront = singlePokemon.sprites['front_default'];
-    const imageBack = singlePokemon.sprites['back_default'];
-    const name = singlePokemon.name;
-    const speed = singlePokemon.stats[0].base_stat;
-    const specialDefense = singlePokemon.stats[1].base_stat;
-    const specialAttack = singlePokemon.stats[2].base_stat;
-    const defense = singlePokemon.stats[3].base_stat;
-    const attack = singlePokemon.stats[4].base_stat;
-    const hp = singlePokemon.stats[5].base_stat;
+    const type = singlePokemon.types.map((type) => type.type.name).join(', '),
+        ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(', '),
+        imageFront = singlePokemon.sprites['front_default'],
+        imageBack = singlePokemon.sprites['back_default'],
+        name = singlePokemon.name,
+        speed = singlePokemon.stats[0].base_stat,
+        specialDefense = singlePokemon.stats[1].base_stat,
+        specialAttack = singlePokemon.stats[2].base_stat,
+        defense = singlePokemon.stats[3].base_stat,
+        attack = singlePokemon.stats[4].base_stat,
+        hp = singlePokemon.stats[5].base_stat;
 
-    const modalBody = $('.modal-body');
-    const modalName = $('.pokeName').text(name);
-    const modalStats = $('<h5 class="pokemon-stats"></h5>').text(
-        `Weight: ${singlePokemon.weight / 10}kg | Height: ${singlePokemon.height / 10}m`
-    );
+    const modalBody = $('.modal-body'),
+        modalName = $('.pokeName').text(name),
+        modalStats = $('<h5 class="pokemon-stats"></h5>').text(
+            `Weight: ${singlePokemon.weight / 10}kg | Height: ${singlePokemon.height / 10}m`
+        ),
 
-    const modalType = $('<h5 class="pokemon-type"></h5>').text(
-        `Type: ${type}`
-    );
+        modalType = $('<h5 class="pokemon-type"></h5>').text(
+            `Type: ${type}`
+        ),
 
-    const modalAbility = $('<h5 class="pokemon-ability"></h5>').text(
-        `Abilities: ${ability}`
-    );
+        modalAbility = $('<h5 class="pokemon-ability"></h5>').text(
+            `Abilities: ${ability}`
+        ),
 
-    const modalTable = $('<table class="table table-striped table-sm text-left table-bordered"></table>').html(`
+        modalTable = $('<table class="table table-striped table-sm text-left table-bordered"></table>').html(`
 <thead>
 <tr>
 <th scope="col">Base</th>
@@ -134,7 +139,7 @@ const displayModal = (singlePokemon) => {
 <th scope="row">Speed</th>
 <td>${speed}</td>
 </tr>
-  </tbody>`)
+  </tbody>`);
 
     const modalFront = $('<img class="pokemon-img" alt="poke_front">');
     modalFront.attr('src', imageFront);
