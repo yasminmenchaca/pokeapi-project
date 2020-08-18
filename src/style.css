@@ -41,9 +41,9 @@ body {
     background-color: skyblue;
 }
 
-/*.navbar-text{*/
-/*    font-family: 'Russo One', sans-serif;*/
-/*}*/
+.navbar-text{
+    padding-top: 10px;
+}
 
 @media screen and (max-width: 768px) {
     #pokeInfo {
@@ -54,7 +54,7 @@ body {
 
     .card-header {
         padding: .75rem 0.25rem;
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .pokemon-img {
