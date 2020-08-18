@@ -172,6 +172,20 @@ $(document).ready(function () {
         }
     });
 
+/////////////////////////////////// BACK TO TOP BUTTON ///////////////////////////////////
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 100) {
+            $('#backToTop').fadeIn();
+        } else {
+            $('#backToTop').fadeOut();
+        }
+    });
+//Click event scroll to top button jquery
+    $('#backToTop').click(function(){
+        $('html, body').animate({scrollTop : 0},600);
+        return false;
+    });
+    
 });
 
 fetchPokemonInfo().catch(error => console.log(error));
