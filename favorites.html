@@ -34,7 +34,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 search" type="text" placeholder="Filter By Name">
+            <input class="form-control mr-sm-2 search" type="text" placeholder="Filter Favorites">
             <button class="btn btn-danger my-2 my-sm-0 reset">Reset</button>
         </form>
     </div>
@@ -42,32 +42,24 @@
 
 <!--main container-->
 <div class="container container__main">
-    <div class="text-center jumbotron jumbotron__main">
-        <div id="jumbotron-container">
-            <h1 class="display-4">Welcome to the Pokédex!</h1>
-            <p class="lead">A place to find classic Pokémon & their stats</p>
-        </div>
+    <div class="jumbotron jumbotron__fave">
+        <h1 class="display-4 text-center">My Favorite Pokémon</h1>
+        <table class="table table-dark" id="favorites">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
     </div>
-    <!--pokecards-->
-    <div id="pokeInfo"></div>
 </div>
 
 <a id="backToTop"><i class="fas fa-chevron-up fa-3x"></i></a>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content text-center">
-            <div class="modal-body">
-                <h1 class="pokeName"></h1>
-            </div>
-            <div class="modal__footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

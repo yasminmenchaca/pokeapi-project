@@ -23,7 +23,7 @@ const displayPokemon = (pokemon) => {
             </div>
             <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
             
-           <!-- <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div> -->
+           <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div>
             
             </div>
     `
@@ -39,27 +39,27 @@ const selectFavorite = async (id) => {
 };
 
 const savingFavorites = (singlePokemon) => {
-    const oldItems = JSON.parse(localStorage.getItem('favorites')) || [],
-        newItem =
+    const favoritesList = JSON.parse(localStorage.getItem('favorites')) || [],
+        newFavorite =
             {
                 'id': singlePokemon.id,
-                'image': singlePokemon.sprites['front_default'],
-                'name': singlePokemon.name
+                'name': singlePokemon.name,
+                'image': singlePokemon.sprites['front_default']
             };
-    oldItems.push(newItem);
-    localStorage.setItem('favorites', JSON.stringify(oldItems));
+    favoritesList.push(newFavorite);
+    localStorage.setItem('favorites', JSON.stringify(favoritesList));
 }
 
 const displayFavorites = () => {
-    let oldItems = JSON.parse(localStorage.getItem("favorites"));
-    let faveString = "";
-    for (let i = 0; i < oldItems.length; i++) {
+    let favoritesList = JSON.parse(localStorage.getItem("favorites")),
+        faveString = "";
+    for (let i = 0; i < favoritesList.length; i++) {
         faveString = `${faveString} 
                 <tr>
                 <th scope="row"></th>
-                <td>${oldItems[i].id}</td>
-                <td>${oldItems[i].name}</td>
-                <td><img src="${oldItems[i].image}" alt="..."></td>
+                <td>${favoritesList[i].id}</td>
+                <td>${favoritesList[i].name}</td>
+                <td><img src="${favoritesList[i].image}" alt="..."></td>
                 </tr>`
     }
     document.getElementById("favorites").innerHTML = faveString;

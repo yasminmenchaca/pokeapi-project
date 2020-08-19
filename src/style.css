@@ -44,10 +44,14 @@ body {
     opacity: .7;
 }
 
-.jumbotron {
+.jumbotron__main {
     position: relative;
     overflow: hidden;
     background-image: url("../img/pokeballs.jpg");
+    background-color: white;
+}
+
+.jumbotron__fave {
     background-color: white;
 }
 
@@ -56,11 +60,12 @@ body {
 }
 
 #backToTop {
-    background-color: white;
+    background-color: #FFCE2F;
     position: fixed;
     right: 30px;
     bottom: 15px;
-    border-radius: 50px;
+    display: block;
+    padding: 5px;
 }
 
 @media screen and (max-width: 768px) {
