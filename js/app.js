@@ -28,7 +28,6 @@ const displayPokemon = (pokemon) => {
             </div>
     `
     ).join('');
-
 };
 
 /////////////////////////////////// FAVORITES ///////////////////////////////////
@@ -49,27 +48,21 @@ const savingFavorites = (singlePokemon) => {
             };
     oldItems.push(newItem);
     localStorage.setItem('favorites', JSON.stringify(oldItems));
+}
 
-    // const favorites = document.getElementById("favorites");
-    // for (let i = 0; i < oldItems.length; i++) {
-    //     document.getElementById('faveId').innerHTML = newItem.id;
-    //     document.getElementById('faveName').innerHTML = newItem.name;
-    //     favorites.innerHTML +=
-    //         `  <tr>
-    //             <th scope="row"></th>
-    //             <td>${oldItems[i].id}</td>
-    //             <td>${oldItems[i].name}</td>
-    //         </tr>`;
-    // }
-
-    $.each(oldItems, function () {
-        $('tbody').append(`<tr>
-        <td>${newItem.id}</td>
-        <td>${newItem.name}</td>
-        <td><img src="${newItem.image}" alt="..."></td>
-        </tr>`);
-    });
-
+const displayFavorites = () => {
+    let oldItems = JSON.parse(localStorage.getItem("favorites"));
+    let faveString = "";
+    for (let i = 0; i < oldItems.length; i++) {
+        faveString = `${faveString} 
+                <tr>
+                <th scope="row"></th>
+                <td>${oldItems[i].id}</td>
+                <td>${oldItems[i].name}</td>
+                <td><img src="${oldItems[i].image}" alt="..."></td>
+                </tr>`
+    }
+    document.getElementById("favorites").innerHTML = faveString;
 }
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
@@ -211,3 +204,4 @@ $(document).ready(function () {
 });
 
 fetchPokemonInfo().catch(error => console.log(error));
+displayFavorites();
