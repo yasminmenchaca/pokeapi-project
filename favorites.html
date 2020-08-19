@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Russo+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/style.css">
     <!--title-->
-    <title>Pokédex</title>
+    <title>Favorites</title>
 </head>
 <body>
 
@@ -34,22 +34,28 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 search" type="text" placeholder="Filter Favorites">
+            <ul class="navbar-nav" style="margin-right: 25px">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+            </ul>
+            <input class="form-control mr-sm-2 faveSearch" type="text" placeholder="Filter Favorites">
             <button class="btn btn-danger my-2 my-sm-0 reset">Reset</button>
         </form>
     </div>
 </nav>
 
 <!--main container-->
-<div class="container container__main">
+<div class="container container__main text-center">
     <div class="jumbotron jumbotron__fave">
-        <h1 class="display-4 text-center">My Favorite Pokémon</h1>
-        <table class="table table-dark" id="favorites">
-            <thead>
+        <h1 class="display-4">My Favorite Pokémon</h1>
+        <table class="table table-striped" id="favorites">
+            <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Image</th>
+<!--                <th scope="col"></th>-->
             </tr>
             </thead>
             <tbody>
@@ -59,7 +65,7 @@
     </div>
 </div>
 
-<a id="backToTop"><i class="fas fa-chevron-up fa-3x"></i></a>
+<a id="backToTop"><i class="fas fa-chevron-up fa-2x"></i></a>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

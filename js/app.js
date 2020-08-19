@@ -21,7 +21,7 @@ const displayPokemon = (pokemon) => {
             <div class="card-header">
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
-            <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="...">
+            <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="pokemon">
             
            <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div>
             
@@ -39,6 +39,8 @@ const selectFavorite = async (id) => {
 };
 
 const savingFavorites = (singlePokemon) => {
+    // All values stored in localStorage are strings. Grab our favorites string from localStorage.
+    // the "|| []" replaces possible null from localStorage with empty array
     const favoritesList = JSON.parse(localStorage.getItem('favorites')) || [],
         newFavorite =
             {
@@ -46,7 +48,9 @@ const savingFavorites = (singlePokemon) => {
                 'name': singlePokemon.name,
                 'image': singlePokemon.sprites['front_default']
             };
+    // add the value to the array
     favoritesList.push(newFavorite);
+    // and store it in localStorage as "favorites"
     localStorage.setItem('favorites', JSON.stringify(favoritesList));
 }
 
@@ -54,16 +58,22 @@ const displayFavorites = () => {
     let favoritesList = JSON.parse(localStorage.getItem("favorites")),
         faveString = "";
     for (let i = 0; i < favoritesList.length; i++) {
-        faveString = `${faveString} 
-                <tr>
-                <th scope="row"></th>
-                <td>${favoritesList[i].id}</td>
+        faveString = `${faveString}
+                <tr class="faveTable">
+                <th scope="row">#${(favoritesList[i].id).toString().padStart(3, '0')}</th>
                 <td>${favoritesList[i].name}</td>
-                <td><img src="${favoritesList[i].image}" alt="..."></td>
+                <td><img src="${favoritesList[i].image}" alt="favorite pokemon"></td>
+<!--                <td><button class="btn btn-danger deleteFave" onclick="deleteFavorite()">Delete</td>-->
                 </tr>`
     }
-    document.getElementById("favorites").innerHTML = faveString;
+    $('#favorites').find('tbody').html(faveString);
 }
+
+// const deleteFavorite = (index) => {
+//     const existingEntries = JSON.parse(localStorage.getItem("favorites"));
+//     existingEntries.splice(index, 1);
+//     localStorage.setItem("favorites", JSON.stringify(existingEntries));
+// }
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
 const selectPokemon = async (id) => {
@@ -101,7 +111,7 @@ const displayModal = (singlePokemon) => {
         ),
 
         modalTable = $('<table class="table table-striped table-sm text-left table-bordered"></table>').html(`
-<thead>
+<thead class="thead-dark">
 <tr>
 <th scope="col">Base</th>
 <th scope="col">Stats</th>
@@ -165,6 +175,13 @@ $(document).ready(function () {
         });
     });
 
+    $('.faveSearch').on("keyup", function () {
+        const value = $(this).val().toLowerCase();
+        $(".faveTable").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
     $('.reset').trigger("reset");
 
     /////////////////////////////////// NAVBAR CLOSE ///////////////////////////////////
@@ -200,6 +217,8 @@ $(document).ready(function () {
         $('html, body').animate({scrollTop: 0}, 600);
         return false;
     });
+
+    /////////////////////////////////// Add to Fave Button ///////////////////////////////////
 
 });
 

@@ -25,7 +25,7 @@ body {
     height: 23vh;
 }
 
-.pokemon-type, .pokemon-ability, .pokeName, .card-header {
+.pokemon-type, .pokemon-ability, .pokeName, .card-header, #favorites {
     text-transform: capitalize;
 }
 
@@ -66,6 +66,11 @@ body {
     bottom: 15px;
     display: block;
     padding: 5px;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: white;
+    margin-right: 25px;
 }
 
 @media screen and (max-width: 768px) {
