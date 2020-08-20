@@ -182,7 +182,10 @@ $(document).ready(function () {
         });
     });
 
-    $('.reset').trigger("reset");
+/////////////////////////////////// RESET ///////////////////////////////////
+    $('.reset').click(function () {
+        location.reload();
+    });
 
     /////////////////////////////////// NAVBAR CLOSE ///////////////////////////////////
     // Close Navbar when clicked outside
