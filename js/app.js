@@ -1,15 +1,18 @@
 const pokeInfo = document.getElementById('pokeInfo');
 
 const fetchPokemonInfo = async () => {
+    // making it async so we can fetch the data through the response
     const url = `https://pokeapi.co/api/v2/pokemon?limit=151`;
     const res = await fetch(url);
     const data = await res.json();
+    // console.log(data);
     const pokemon = data.results.map((result, index) => ({
         name: result.name,
         apiURL: result.url,
         id: index + 1,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
     }));
+    // console.log(data.results);
     displayPokemon(pokemon);
 };
 
@@ -17,12 +20,11 @@ const fetchPokemonInfo = async () => {
 const displayPokemon = (pokemon) => {
     pokeInfo.innerHTML = pokemon.map((singlePokemon) =>
         `
-            <div class="card text-center">
+            <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})">
             <div class="card-header">
             ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
             </div>
-            <img onclick="selectPokemon(${singlePokemon.id})" data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="pokemon">
-            
+            <img data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="pokemon">
            <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div>
             
             </div>
@@ -31,42 +33,44 @@ const displayPokemon = (pokemon) => {
 };
 
 /////////////////////////////////// FAVORITES ///////////////////////////////////
+// All values stored in localStorage are strings. Grab our favorites string from localStorage.
+// the "|| []" replaces possible null from localStorage with empty array
+const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
 const selectFavorite = async (id) => {
+    // making it async so we can fetch the data through the response
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
     const singlePokemon = await res.json();
+    // console.log(id);
     savingFavorites(singlePokemon);
 };
 
 const savingFavorites = (singlePokemon) => {
-    // All values stored in localStorage are strings. Grab our favorites string from localStorage.
-    // the "|| []" replaces possible null from localStorage with empty array
-    const favoritesList = JSON.parse(localStorage.getItem('favorites')) || [],
-        newFavorite =
-            {
-                'id': singlePokemon.id,
-                'name': singlePokemon.name,
-                'image': singlePokemon.sprites['front_default']
-            };
+    const newFavorite =
+        {
+            'id': singlePokemon.id,
+            'name': singlePokemon.name,
+            'image': singlePokemon.sprites['front_default']
+        };
     // add the value to the array
-    favoritesList.push(newFavorite);
+    favorites.push(newFavorite);
     // and store it in localStorage as "favorites"
-    localStorage.setItem('favorites', JSON.stringify(favoritesList));
+    localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
 const displayFavorites = () => {
-    let favoritesList = JSON.parse(localStorage.getItem("favorites")),
-        faveString = "";
-    for (let i = 0; i < favoritesList.length; i++) {
-        faveString = `${faveString}
+    let faveOutput = "";
+    favorites.forEach((favorite) => {
+        faveOutput = `${faveOutput}
                 <tr class="faveTable">
-                <th scope="row">#${(favoritesList[i].id).toString().padStart(3, '0')}</th>
-                <td>${favoritesList[i].name}</td>
-                <td><img src="${favoritesList[i].image}" alt="favorite pokemon"></td>
+                <th scope="row">#${(favorite.id).toString().padStart(3, '0')}</th>
+                <td>${favorite.name}</td>
+                <td><img src="${favorite.image}" alt="favorite pokemon"></td>
 <!--                <td><button class="btn btn-danger deleteFave" onclick="deleteFavorite()">Delete</td>-->
                 </tr>`
-    }
-    $('#favorites').find('tbody').html(faveString);
+    })
+    $('#favorites').find('tbody').html(faveOutput);
 }
 
 // const deleteFavorite = (index) => {
@@ -77,13 +81,16 @@ const displayFavorites = () => {
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
 const selectPokemon = async (id) => {
+    // making it async so we can fetch the data through the response
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
     const singlePokemon = await res.json();
+    // console.log(id);
     displayModal(singlePokemon);
 };
 
 const displayModal = (singlePokemon) => {
+    // console.log(singlePokemon);
     const type = singlePokemon.types.map((type) => type.type.name).join(', '),
         ability = singlePokemon.abilities.map((ability) => ability.ability.name).join(', '),
         imageFront = singlePokemon.sprites['front_default'],
@@ -170,14 +177,7 @@ $(document).ready(function () {
     // search on keyup function
     $('.search').on("keyup", function () {
         const value = $(this).val().toLowerCase();
-        $(".card").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
-    $('.faveSearch').on("keyup", function () {
-        const value = $(this).val().toLowerCase();
-        $(".faveTable").filter(function () {
+        $(".card, .faveTable").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -187,7 +187,7 @@ $(document).ready(function () {
         location.reload();
     });
 
-    /////////////////////////////////// NAVBAR CLOSE ///////////////////////////////////
+/////////////////////////////////// NAVBAR CLOSE ///////////////////////////////////
     // Close Navbar when clicked outside
     $(window).on('click', function (event) {
         // element over which click was made
@@ -200,9 +200,9 @@ $(document).ready(function () {
 
 /////////////////////////////////// NO 'ENTER' ON SEARCH ///////////////////////////////////
     // pressing enter doesn't execute search
-    $(".search").keydown(function (e) {
-        if (e.keyCode === 13) {
-            e.preventDefault();
+    $(".search").keydown(function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
             return false;
         }
     });
@@ -215,13 +215,14 @@ $(document).ready(function () {
             $('#backToTop').fadeOut();
         }
     });
-//Click event scroll to top button jquery
+
+// Click event scroll to top button jquery
     $('#backToTop').click(function () {
         $('html, body').animate({scrollTop: 0}, 600);
         return false;
     });
 
-    /////////////////////////////////// Add to Fave Button ///////////////////////////////////
+/////////////////////////////////// Add to Fave Button ///////////////////////////////////
 
 });
 
