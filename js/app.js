@@ -60,24 +60,29 @@ const savingFavorites = (singlePokemon) => {
 }
 
 const displayFavorites = () => {
-    let faveOutput = "";
-    favorites.forEach((favorite) => {
-        faveOutput = `${faveOutput}
-                <tr class="faveTable">
-                <th scope="row">#${(favorite.id).toString().padStart(3, '0')}</th>
-                <td>${favorite.name}</td>
-                <td><img src="${favorite.image}" alt="favorite pokemon"></td>
-<!--                <td><button class="btn btn-danger deleteFave" onclick="deleteFavorite()">Delete</td>-->
-                </tr>`
+    let faveOutput = '';
+    favorites.forEach((favorite, index) => {
+        faveOutput =
+        `
+        ${faveOutput}
+        <tr>
+        <th scope="row">#${(favorite.id).toString().padStart(3, '0')}
+        <br>
+        <button class="btn btn-danger deleteFave" onclick="deleteFavorite(${index})">Delete</button>
+        </th>
+        <td>${favorite.name}</td>
+        <td><img src="${favorite.image}" alt="favorite pokemon"></td>
+        </tr>
+        `
     })
     $('#favorites').find('tbody').html(faveOutput);
 }
 
-// const deleteFavorite = (index) => {
-//     const existingEntries = JSON.parse(localStorage.getItem("favorites"));
-//     existingEntries.splice(index, 1);
-//     localStorage.setItem("favorites", JSON.stringify(existingEntries));
-// }
+const deleteFavorite = (index) => {
+    const existingEntries = JSON.parse(localStorage.getItem("favorites"));
+    existingEntries.splice(index, 1);
+    localStorage.setItem("favorites", JSON.stringify(existingEntries));
+}
 
 /////////////////////////////////// MODAL INFORMATION ///////////////////////////////////
 const selectPokemon = async (id) => {
