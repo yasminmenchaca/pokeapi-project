@@ -22,7 +22,7 @@ const displayPokemon = (pokemon) => {
         `
             <div class="card text-center" onclick="selectPokemon(${singlePokemon.id})">
             <div class="card-header">
-            ${singlePokemon.name} - #${(singlePokemon.id).toString().padStart(3, '0')}
+            #${(singlePokemon.id).toString().padStart(3, '0')} - ${singlePokemon.name}
             </div>
             <img data-toggle="modal" data-target="#exampleModal" class="card-img" src="${singlePokemon.image}" alt="pokemon">
            <div class ="card-footer"><button class="btn btn-outline-dark" onclick="selectFavorite(${singlePokemon.id})">Add to Favorites</button></div>
