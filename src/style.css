@@ -78,6 +78,10 @@ body {
     margin-right: 25px;
 }
 
+#favorites{
+    background-color: white;
+}
+
 @media screen and (max-width: 768px) {
     #pokeInfo {
         display: grid;
@@ -87,7 +91,7 @@ body {
 
     .card-header {
         padding: .75rem 0.25rem;
-        font-size: 15px;
+        font-size: 30px;
     }
 
     .pokemon-img {
