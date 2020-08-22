@@ -85,8 +85,8 @@ body {
 @media screen and (max-width: 768px) {
     #pokeInfo {
         display: grid;
-        /*grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));*/
-        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));
+        grid-gap: 15px;
     }
 
     .card-header {
